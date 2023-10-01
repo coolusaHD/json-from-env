@@ -1,18 +1,18 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'json-from-env'
+description: 'Create json from env'
+author: 'coolusaHD'
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  file-path:
+    description: 'File path ending with new generated file .json'
     required: true
-    default: '1000'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+  entity-names:
+    description: 'Comma separated String of entity names'
+    required: true
+  entity-values:
+    description: 'Comma separated String of entity values'
+    required: true
 
 runs:
   using: node20

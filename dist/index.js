@@ -2753,22 +2753,37 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const core = __importStar(__nccwpck_require__(186));
-const wait_1 = __nccwpck_require__(259);
+const fs = __importStar(__nccwpck_require__(561));
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
  */
 async function run() {
     try {
-        const ms = core.getInput('milliseconds');
-        // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-        core.debug(`Waiting ${ms} milliseconds ...`);
-        // Log the current timestamp, wait, then log the new timestamp
-        core.debug(new Date().toTimeString());
-        await (0, wait_1.wait)(parseInt(ms, 10));
-        core.debug(new Date().toTimeString());
-        // Set outputs for other workflow steps to use
-        core.setOutput('time', new Date().toTimeString());
+        const entitiyNames = core.getInput('entity-names');
+        const entitiyValues = core.getInput('entity-values');
+        // check if the inputs are empty
+        if (entitiyNames === '' || entitiyValues === '') {
+            throw new Error('The names and values must not be empty');
+        }
+        const entitiyNamesArray = entitiyNames.split(',');
+        const entitiyValuesArray = entitiyValues.split(',');
+        // check if the number of names and values are the same
+        if (entitiyNamesArray.length !== entitiyValuesArray.length) {
+            throw new Error('The number of names and values must be the same');
+        }
+        // create a map of the names and values
+        const entitiyMap = new Map();
+        for (let i = 0; i < entitiyNamesArray.length; i++) {
+            entitiyMap.set(entitiyNamesArray[i], entitiyValuesArray[i]);
+        }
+        // create the file
+        const filePath = core.getInput('file-path');
+        fs.writeFile(filePath, JSON.stringify(Object.fromEntries(entitiyMap)), err => {
+            if (err)
+                throw err;
+        });
+        core.debug(`Created file at ${filePath}`);
     }
     catch (error) {
         // Fail the workflow run if an error occurs
@@ -2777,31 +2792,6 @@ async function run() {
     }
 }
 exports.run = run;
-
-
-/***/ }),
-
-/***/ 259:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.wait = void 0;
-/**
- * Wait for a number of milliseconds.
- * @param milliseconds The number of milliseconds to wait.
- * @returns {Promise<string>} Resolves with 'done!' after the wait is over.
- */
-async function wait(milliseconds) {
-    return new Promise(resolve => {
-        if (isNaN(milliseconds)) {
-            throw new Error('milliseconds not a number');
-        }
-        setTimeout(() => resolve('done!'), milliseconds);
-    });
-}
-exports.wait = wait;
 
 
 /***/ }),
@@ -2859,6 +2849,14 @@ module.exports = require("https");
 
 "use strict";
 module.exports = require("net");
+
+/***/ }),
+
+/***/ 561:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:fs");
 
 /***/ }),
 

@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
+import * as fs from 'node:fs'
 
 /**
  * The main function for the action.
@@ -7,18 +7,40 @@ import { wait } from './wait'
  */
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    const entitiyNames: string = core.getInput('entity-names')
+    const entitiyValues: string = core.getInput('entity-values')
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    // check if the inputs are empty
+    if (entitiyNames === '' || entitiyValues === '') {
+      throw new Error('The names and values must not be empty')
+    }
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const entitiyNamesArray = entitiyNames.split(',')
+    const entitiyValuesArray = entitiyValues.split(',')
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    // check if the number of names and values are the same
+    if (entitiyNamesArray.length !== entitiyValuesArray.length) {
+      throw new Error('The number of names and values must be the same')
+    }
+
+    // create a map of the names and values
+    const entitiyMap = new Map<string, string>()
+    for (let i = 0; i < entitiyNamesArray.length; i++) {
+      entitiyMap.set(entitiyNamesArray[i], entitiyValuesArray[i])
+    }
+
+    // create the file
+    const filePath = core.getInput('file-path')
+
+    fs.writeFile(
+      filePath,
+      JSON.stringify(Object.fromEntries(entitiyMap)),
+      err => {
+        if (err) throw err
+      }
+    )
+
+    core.debug(`Created file at ${filePath}`)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
