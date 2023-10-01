@@ -13,10 +13,6 @@ import * as main from '../src/main'
 const debugMock = jest.spyOn(core, 'debug')
 const getInputMock = jest.spyOn(core, 'getInput')
 const setFailedMock = jest.spyOn(core, 'setFailed')
-const setOutputMock = jest.spyOn(core, 'setOutput')
-
-// Mock the action's main function
-const runMock = jest.spyOn(main, 'run')
 
 describe('action', () => {
   beforeEach(() => {
@@ -68,7 +64,7 @@ describe('action', () => {
     // Mock fs.writeFile to simulate an error
     const writeFileMock = jest
       .spyOn(require('node:fs'), 'writeFile')
-      .mockImplementation((path, data, callback: any) => {
+      .mockImplementation((_path, _data, callback: any) => {
         callback(new Error('File write error'))
       })
 
@@ -133,7 +129,7 @@ describe('action', () => {
     // Mock fs.writeFile to simulate a successful write
     const writeFileMock = jest
       .spyOn(require('node:fs'), 'writeFile')
-      .mockImplementation((path, data, callback: any) => {
+      .mockImplementation((_path, _data, callback: any) => {
         callback(null)
       })
 

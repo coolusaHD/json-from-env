@@ -25,10 +25,9 @@ export async function run(): Promise<void> {
 
     // create a map of the names and values
     const entitiyMap = new Map<string, string>()
-    entitiyNamesArray.forEach((name, index) => {
-      core.debug(`Adding ${name}`)
-      entitiyMap.set(name, entitiyValuesArray[index])
-    })
+    for (let i = 0; i < entitiyNamesArray.length; i++) {
+      entitiyMap.set(entitiyNamesArray[i], entitiyValuesArray[i])
+    }
 
     // create the file
     const filePath = core.getInput('file-path')
