@@ -2774,10 +2774,9 @@ async function run() {
         }
         // create a map of the names and values
         const entitiyMap = new Map();
-        entitiyNamesArray.forEach((name, index) => {
-            core.debug(`Adding ${name}`);
-            entitiyMap.set(name, entitiyValuesArray[index]);
-        });
+        for (let i = 0; i < entitiyNamesArray.length; i++) {
+            entitiyMap.set(entitiyNamesArray[i], entitiyValuesArray[i]);
+        }
         // create the file
         const filePath = core.getInput('file-path');
         fs.writeFile(filePath, JSON.stringify(Object.fromEntries(entitiyMap)), err => {
