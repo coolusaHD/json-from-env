@@ -54,5 +54,5 @@ jobs:
         uses: ./
         with:
           file-path: ./test/env.json
-          entitiy-names: 'name1,name2,name3'
-          entitiy-values: 'value1,value2,value3'
+          entity-names: 'name1,name2,name3'
+          entity-values: 'value1,value2,value3'
