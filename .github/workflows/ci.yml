@@ -53,6 +53,6 @@ jobs:
         id: test-action
         uses: ./
         with:
-          file-path: ./test/env.json
+          file-path: ./env.json
           entity-names: 'name1,name2,name3'
           entity-values: 'value1,value2,value3'
