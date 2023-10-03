@@ -22,6 +22,8 @@ Comma-separated string of entity values.
 
 ## Usage
 
+Change `[version]` to the latest version of this GitHub Action.
+
 ```yaml
 name: Generate JSON
 
@@ -39,7 +41,7 @@ jobs:
 
       - name: Generate JSON
         id: generate-json
-        uses: your-username/your-repo@v1
+        uses: coolusaHD/json-from-env@[version]
         with:
           file-path: 'output.json'
           entity-names: 'name1,name2,name3'
