@@ -52,8 +52,6 @@ jobs:
           path: output.json
 ```
 
-```
-
 ## Example Workflow
 
 The example workflow demonstrates how to use this GitHub Action to generate a
@@ -66,15 +64,5 @@ for details.
 
 ## Contribution
 
-Contributions are welcome! Here's how you can get started:
-
-1. Fork the repository.
-2. Clone your forked repository locally.
-3. Create a new branch for your feature or bug fix:
-   `git checkout -b feature/my-feature`.
-4. Make your changes and commit them with descriptive messages.
-5. Push your changes to your fork on GitHub:
-   `git push origin feature/my-feature`.
-6. Open a pull request to the `main` branch of this repository.
-7. Please make sure to update tests and documentation as necessary.
-```
+Contributions are welcome! Create a fork of this project, commit your changes
+and open a pull request.
