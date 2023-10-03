@@ -22,6 +22,8 @@ Comma-separated string of entity values.
 
 ## Usage
 
+Change `[version]` to the latest version of this GitHub Action.
+
 ```yaml
 name: Generate JSON
 
@@ -35,18 +37,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Generate JSON
         id: generate-json
-        uses: your-username/your-repo@v1
+        uses: coolusaHD/json-from-env@[version]
         with:
           file-path: 'output.json'
-          entity-names: 'name1,name2,name3'
-          entity-values: 'value1,value2,value3'
+          entity-names: 'name1,NAME_2,NAME_3'
+          entity-values: 'value1,VALUE_2,${{ secrets.NAME_3 }}'
 
       - name: Upload JSON Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: generated-json
           path: output.json
