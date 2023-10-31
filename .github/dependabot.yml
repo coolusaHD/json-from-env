@@ -9,6 +9,10 @@ updates:
       interval: weekly
     commit-message:
       prefix: 'chore(deps): update actions/'
+    groups:
+      actions:
+        patterns:
+          - '*'
 
   - package-ecosystem: npm
     directory: /
@@ -19,3 +23,7 @@ updates:
       interval: weekly
     commit-message:
       prefix: 'chore(deps): update npm/'
+    groups:
+      npm:
+        patterns:
+          - '*'
