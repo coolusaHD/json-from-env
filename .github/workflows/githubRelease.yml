@@ -4,7 +4,8 @@ on:
     branches:
       - release
 
-permissions: write-all
+permissions:
+  contents: write
 
 name: 📦 Publish Release
 jobs:
