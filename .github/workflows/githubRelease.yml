@@ -4,7 +4,8 @@ on:
     branches:
       - release
 
-permissions: write-all
+permissions:
+  contents: write
 
 name: 📦 Publish Release
 jobs:
@@ -13,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: 🔖 Get Next Version
         id: semver
